@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: byeol-library
+    runtime: node
+    plan: free
+    buildCommand: echo 'No build required'
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: MAX_DAILY_TOTAL
+        value: '30'
+      - key: DAILY_LIMIT
+        value: '3'
+      - key: HOURLY_LIMIT
+        value: '2'
