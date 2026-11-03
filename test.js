@@ -5,7 +5,7 @@ const assert=require('node:assert/strict'),http=require('node:http'),{spawn}=req
  const mock=http.createServer(async(req,res)=>{
    calls++;used.push(req.url);
    assert.equal(req.headers['x-goog-api-key'],'TEST_ONLY');
-   assert.match(req.url,/\/models\/gemini-2\.5-flash-lite:generateContent$/);
+   assert.match(req.url,/\/models\/gemini-3\.5-flash-lite:generateContent$/);
    let raw='';for await(const c of req)raw+=c;
    const data=JSON.parse(raw);assert.match(JSON.stringify(data),/성격과 기질/);
    res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({candidates:[{content:{parts:[{text:'별의 해석\n모의 응답입니다.'}]}}],usageMetadata:{promptTokenCount:80,candidatesTokenCount:30}}));
@@ -22,7 +22,7 @@ const assert=require('node:assert/strict'),http=require('node:http'),{spawn}=req
   const denied=await fetch(base+'/api/reading',{method:'POST',headers:{Origin:'https://attacker.invalid','Content-Type':'application/json'},body:'{}'});assert.equal(denied.status,403);
   const input={topic:'성격과 기질',profile:{birth:'1994-05-31',calendar:'양력',gender:'여성'},solarDate:'1994-05-31',pillars:{year:{stem:0,branch:0},month:{stem:0,branch:0},day:{stem:0,branch:0},hour:null}};
   const post=()=>fetch(base+'/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(input)});
-  const first=await post();assert.equal(first.status,200);const result=await first.json();assert.match(result.reading,/모의 응답/);assert.equal(result.model,'gemini-2.5-flash-lite');
+  const first=await post();assert.equal(first.status,200);const result=await first.json();assert.match(result.reading,/모의 응답/);assert.equal(result.model,'gemini-3.5-flash-lite');
   const second=await post();assert.equal(second.status,200);assert.equal((await second.json()).cached,true);assert.equal(calls,1);
   console.log('PASS: health, original page, input validation, origin rejection, Gemini mock REST, caching, allowlisted model');
  }finally{child.kill();mock.close();}

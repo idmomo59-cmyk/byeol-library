@@ -2,7 +2,7 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const PORT=Number(process.env.PORT||3000),HOST=process.env.HOST||'0.0.0.0';
 const KEY=process.env.GEMINI_API_KEY||'', FREE=process.env.GEMINI_FREE_TIER_CONFIRMED==='true';
-const PRIMARY='gemini-2.5-flash-lite',SECONDARY='gemini-2.5-flash';
+const PRIMARY='gemini-3.5-flash-lite',SECONDARY='gemini-3.1-flash-lite';
 const BASE=process.env.NODE_ENV==='test'&&process.env.GEMINI_TEST_BASE_URL?process.env.GEMINI_TEST_BASE_URL:'https://generativelanguage.googleapis.com/v1beta';
 const DAILY_LIMIT=Math.max(1,Number(process.env.DAILY_LIMIT||3)),HOURLY_LIMIT=Math.max(1,Number(process.env.HOURLY_LIMIT||2)),MAX_DAILY_TOTAL=Math.max(1,Number(process.env.MAX_DAILY_TOTAL||30));
 const topics=new Set(['성격과 기질','연애와 관계','직업과 적성','재물과 소비','올해의 흐름','월별 흐름']);
